@@ -1,7 +1,7 @@
 import tkinter as tk
 
 def clicou():
-    label_resultado.config(text="git add upstream --'htpps//:www.github.com/joaozin/trabalho-colegio' a a a a a a a a a a a aaaaaaa a a a aa")
+    label_resultado.config(text="git add upstream --'htpps//:www.github.com/joaozin/trabalho-colegio'")
 
 def start():
     janela.mainloop()
