@@ -9,12 +9,18 @@ commit_text:str = ""
 def Local_repository_location():
     
     global location
-    
+
     location = filedialog.askdirectory(
         title="Choose a directory"
     )
 
-    local_repository_path.config(text=location)
+    answer = tc.detect_git_repository(location)
+
+    if answer:
+        local_repository_path.config(text=location)
+        show_label(local_repository_good_message)
+    else:
+        show_label(local_repository_bad_message)
 
 
 def Get_description():
@@ -22,7 +28,31 @@ def Get_description():
     global commit_text
 
     commit_text = commit_description.get()
-    commit_text = "'" + commit_text + "'"
+
+    if commit_text == "":
+        show_label(entry_bad_message)
+        return
+    else:
+        show_label(entry_good_message)
+        commit_text = "'" + commit_text + "'"
+
+
+def show_label(label:tk.Label):
+
+    if label == local_repository_good_message:
+        local_repository_bad_message.forget()
+    else:
+        local_repository_good_message.forget()
+
+    if label == entry_good_message:
+        entry_bad_message.forget()
+    else:
+        entry_good_message.forget()
+
+
+    label.pack(fill="x")
+
+
 
 
 #-- Screen configs
@@ -30,6 +60,7 @@ def Get_description():
 screen = tk.Tk()
 screen.title("GitAlgorithm")
 screen.geometry("800x600")
+
 
 
 #-- Local Repository configs
@@ -40,53 +71,59 @@ local_repository_frame.pack(fill="x", padx=20, pady=20)
 local_repository_btn = tk.Button(local_repository_frame, text="add local repository", command=Local_repository_location)
 local_repository_btn.pack(side="left", fill="x", padx=20)
 
-local_repository_path = tk.Label(
-    local_repository_frame, 
-    text="", 
-    bg="#333333", 
-    fg="white",
-    width=40,
-    height=1)
+local_repository_path = tk.Label(local_repository_frame, text="", bg="#333333", fg="white", width=40, height=1)
 
 local_repository_path.pack(side="left", fill="x", expand=True)
+
+local_repository_good_message = tk.Label(screen, text="Succesfully conected to a git repository", fg="green")
+
+local_repository_bad_message = tk.Label(screen, text="This is not a git repository", fg="red")
+
 
 
 #-- Entrada de dados
 
 commit_description = tk.StringVar()
 
-entry = tk.Entry(screen, textvariable=commit_description)
-entry.pack()
+entry_frame = tk.Frame(screen)
+entry_frame.pack(fill="x", padx=4, pady=4)
 
-description_btn = tk.Button(screen, text="confirm", command=Get_description)
-description_btn.pack(side="top", fill="x", padx=10)
+entry_label = tk.Label(entry_frame, text="Insert the description:", width=20, height=1)
+entry_label.pack(side="left", padx=25)
 
+entry = tk.Entry(entry_frame, textvariable=commit_description, justify="center")
+entry.pack(side="left", fill="x", expand=True)
+
+description_btn = tk.Button(entry_frame, text="confirm", command=Get_description)
+description_btn.pack(fill="x", padx=15)
+
+entry_good_message = tk.Label(screen, text="commit description confirmed", fg="green")
+
+entry_bad_message = tk.Label(screen, text="commit description cannot be empty", fg="red")
+
+
+
+#-- Buttons Frame
+
+commit_buttons_frame = tk.Frame(screen, bg="#333333", borderwidth=2, relief="solid")
+commit_buttons_frame.pack(side="right", fill="y", padx=10, pady=10)
 
 #-- Github commit config
 
-github_frame = tk.Frame(screen)
-github_frame.pack(fill="y", padx=10, pady=10)
-
-github_btn = tk.Button(github_frame, text="github commit", command=lambda: tc.Do_github_commit(commit_text))
-github_btn.pack(side="top", fill="x", padx=10)
+github_btn = tk.Button(commit_buttons_frame, text="github commit", command=lambda: tc.Do_github_commit(commit_text, location))
+github_btn.pack(side="top", fill="x", padx=10, pady=5)
 
 
 #-- Gitlab commit config
 
-gitlab_frame = tk.Frame(screen)
-gitlab_frame.pack(fill="y", padx=10, pady=10)
-
-gitlab_btn = tk.Button(gitlab_frame, text="gitlab commit", command=lambda: tc.Do_gitlab_commit(commit_text))
-gitlab_btn.pack(side="top", fill="x", padx=10)
+gitlab_btn = tk.Button(commit_buttons_frame, text="gitlab commit", command=lambda: tc.Do_gitlab_commit(commit_text, location))
+gitlab_btn.pack(side="top", fill="x", padx=10, pady=5)
 
 
 #-- Both commit config
 
-both_frame = tk.Frame(screen)
-both_frame.pack(fill="y", padx=10, pady=10)
-
-both_btn = tk.Button(both_frame, text="both commit", command=lambda: tc.Do_gitlab_commit(commit_text))
-both_btn.pack(side="top", fill="x", padx=10)
+both_btn = tk.Button(commit_buttons_frame, text="both commit", command=lambda: tc.Do_gitlab_commit(commit_text, location))
+both_btn.pack(side="top", fill="x", padx=10, pady=5)
 
 
 
