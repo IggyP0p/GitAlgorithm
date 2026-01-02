@@ -1,7 +1,7 @@
 import tkinter as tk
 
 def clicou():
-    label_resultado.config(text="git add upstream --'htpps//:www.github.com/joaozin/trabalho-colegio'")
+    label_resultado.config(text="git add upstream --'htpps//:www.github.com/joaozin/trabalho-colegio' a a a a a a a a a a a aaaaaaa a a a aa")
 
 def start():
     janela.mainloop()
@@ -21,7 +21,7 @@ label_resultado = tk.Label(
     bg="#333333", 
     fg="white",
     width=80,
-    height=1)
+    height=2)
 
 label_resultado.pack()
 
@@ -35,5 +35,6 @@ label_resultado.pack()
 # URL Repositório: https://github.com/usuario/meu-projeto.git
 #
 # git init
-# git remote add origin https://github.com/usuario/meu-projeto.git
+# git remote add github https://github.com/usuario/meu-projeto.git
+# git remote add gitlab git@gitlab.com:usuario/meu-projeto.git 
 # git commit -m "Mensagem"
