@@ -19,6 +19,7 @@ def Local_repository_location():
     if answer:
         local_repository_path.config(text=location)
         show_label(local_repository_good_message)
+        Label_commands(1)
     else:
         show_label(local_repository_bad_message)
 
@@ -34,6 +35,7 @@ def Get_description():
         return
     else:
         show_label(entry_good_message)
+        Label_commands(2)
         commit_text = "'" + commit_text + "'"
 
 
@@ -49,13 +51,31 @@ def show_label(label:tk.Label):
     label.pack(fill="x")
 
 
+def Label_commands(command:int):
+
+    match command:
+        case 1:
+            command_label.config(text="cd " + location)
+
+        case 2:
+            command_label.config(text="git commit -m '" + commit_text + "'")
+
+        case 3:
+            command_label.config(text="git push origin")
+
+        case 4:
+            command_label.config(text="git push gitlab")
+
+        case 5:
+            command_label.config(text="git push")
+
 
 
 #-- Screen configs
 
 screen = tk.Tk()
 screen.title("GitAlgorithm")
-screen.geometry("800x600")
+screen.geometry("600x400")
 
 
 
@@ -99,10 +119,20 @@ entry_bad_message = tk.Label(screen, text="commit description cannot be empty", 
 
 
 
+#-- Git commands
+
+command_frame = tk.Frame(screen)
+command_frame.pack(fill="x", padx=15, pady=15)
+
+command_label = tk.Label(command_frame, text="Do something", width=40, height=3, bg="#333333", fg="white")
+command_label.pack(fill="x")
+
+
+
 #-- Buttons Frame
 
 commit_buttons_frame = tk.Frame(screen, bg="#333333", borderwidth=2, relief="solid")
-commit_buttons_frame.pack(side="right", fill="y", padx=10, pady=10)
+commit_buttons_frame.pack(fill="x", padx=10, pady=10)
 
 
 #-- Github commit config
@@ -110,9 +140,9 @@ commit_buttons_frame.pack(side="right", fill="y", padx=10, pady=10)
 github_btn = tk.Button(commit_buttons_frame, text="github commit", command=lambda: tc.Do_github_commit(commit_text, location))
 github_btn.pack(side="top", fill="x", padx=10, pady=5)
 
-github_bad_message = tk.Label(screen, text="Error: It was not possible to commit on github", fg="green")
+github_bad_message = tk.Label(screen, text="Error: It was not possible to commit on github", fg="red")
 
-commit_good_message = tk.Label(screen, text="Success: Git commited", fg="red")
+commit_good_message = tk.Label(screen, text="Success: Git commited", fg="green")
 
 
 #-- Gitlab commit config
@@ -120,7 +150,7 @@ commit_good_message = tk.Label(screen, text="Success: Git commited", fg="red")
 gitlab_btn = tk.Button(commit_buttons_frame, text="gitlab commit", command=lambda: tc.Do_gitlab_commit(commit_text, location))
 gitlab_btn.pack(side="top", fill="x", padx=10, pady=5)
 
-gitlab_bad_message = tk.Label(screen, text="Error: It was not possible to commit on gitlab", fg="green")
+gitlab_bad_message = tk.Label(screen, text="Error: It was not possible to commit on gitlab", fg="red")
 
 
 #-- Both commit config

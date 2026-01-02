@@ -20,7 +20,9 @@ def Do_github_commit(descricao:str, location:str):
 
         else:
             print("Success: " + resultado.stdout)
+            
             interface.show_label(interface.commit_good_message)
+            interface.Label_commands(3)
 
 
 
@@ -43,6 +45,7 @@ def Do_gitlab_commit(descricao:str, location:str):
         else:
             print("Success: " + resultado.stdout)
             interface.show_label(interface.commit_good_message)
+            interface.Label_commands(4)
 
 
 def Do_both_commits(descricao:str, location:str):
@@ -70,6 +73,7 @@ def Do_both_commits(descricao:str, location:str):
         else:
             print("Success: " + resultado.stdout)
             interface.show_label(interface.commit_good_message)
+            interface.Label_commands(5)
 
 
 def detect_git_repository(location:str):
