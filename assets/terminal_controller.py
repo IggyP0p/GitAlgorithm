@@ -48,6 +48,7 @@ def Do_gitlab_commit(descricao:str, location:str):
             interface.Label_commands(4)
 
 
+
 def Do_both_commits(descricao:str, location:str):
     commands = [
         ["git", "add", "."],
@@ -74,6 +75,7 @@ def Do_both_commits(descricao:str, location:str):
             print("Success: " + resultado.stdout)
             interface.show_label(interface.commit_good_message)
             interface.Label_commands(5)
+
 
 
 def detect_git_repository(location:str):

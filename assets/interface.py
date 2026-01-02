@@ -2,9 +2,11 @@ import tkinter as tk
 from tkinter import filedialog
 from . import terminal_controller as tc
 
+
 location:str = ""
 commit_text:str = ""
 previous_label:tk.Label = None
+
 
 def Local_repository_location():
     
@@ -158,16 +160,3 @@ gitlab_bad_message = tk.Label(screen, text="Error: It was not possible to commit
 both_btn = tk.Button(commit_buttons_frame, text="both commit", command=lambda: tc.Do_gitlab_commit(commit_text, location))
 both_btn.pack(side="top", fill="x", padx=10, pady=5)
 
-
-# Configura Git (Apenas uma vez)
-#
-# git config --global user.name "Seu nome"
-# git config --global user.email "Seu@email.com"
-# git config --list -> confere
-#
-# URL Repositório: https://github.com/usuario/meu-projeto.git
-#
-# git init
-# git remote add github https://github.com/usuario/meu-projeto.git
-# git remote add gitlab git@gitlab.com:usuario/meu-projeto.git 
-# git commit -m "Mensagem"
