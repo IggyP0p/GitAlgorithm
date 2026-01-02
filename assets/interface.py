@@ -4,7 +4,7 @@ from . import terminal_controller as tc
 
 location:str = ""
 commit_text:str = ""
-
+previous_label:tk.Label = None
 
 def Local_repository_location():
     
@@ -39,16 +39,12 @@ def Get_description():
 
 def show_label(label:tk.Label):
 
-    if label == local_repository_good_message:
-        local_repository_bad_message.forget()
-    else:
-        local_repository_good_message.forget()
+    global previous_label
 
-    if label == entry_good_message:
-        entry_bad_message.forget()
-    else:
-        entry_good_message.forget()
+    if previous_label != None:
+        previous_label.forget()
 
+    previous_label = label
 
     label.pack(fill="x")
 
@@ -108,10 +104,15 @@ entry_bad_message = tk.Label(screen, text="commit description cannot be empty", 
 commit_buttons_frame = tk.Frame(screen, bg="#333333", borderwidth=2, relief="solid")
 commit_buttons_frame.pack(side="right", fill="y", padx=10, pady=10)
 
+
 #-- Github commit config
 
 github_btn = tk.Button(commit_buttons_frame, text="github commit", command=lambda: tc.Do_github_commit(commit_text, location))
 github_btn.pack(side="top", fill="x", padx=10, pady=5)
+
+github_bad_message = tk.Label(screen, text="Error: It was not possible to commit on github", fg="green")
+
+commit_good_message = tk.Label(screen, text="Success: Git commited", fg="red")
 
 
 #-- Gitlab commit config
@@ -119,12 +120,13 @@ github_btn.pack(side="top", fill="x", padx=10, pady=5)
 gitlab_btn = tk.Button(commit_buttons_frame, text="gitlab commit", command=lambda: tc.Do_gitlab_commit(commit_text, location))
 gitlab_btn.pack(side="top", fill="x", padx=10, pady=5)
 
+gitlab_bad_message = tk.Label(screen, text="Error: It was not possible to commit on gitlab", fg="green")
+
 
 #-- Both commit config
 
 both_btn = tk.Button(commit_buttons_frame, text="both commit", command=lambda: tc.Do_gitlab_commit(commit_text, location))
 both_btn.pack(side="top", fill="x", padx=10, pady=5)
-
 
 
 # Configura Git (Apenas uma vez)
