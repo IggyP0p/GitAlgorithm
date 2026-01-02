@@ -10,9 +10,11 @@ def Do_github_commit(descricao:str):
 
 
     for cmd in commands:
+        try:
+            resultado = subprocess.run(cmd, capture_output=True, text=True)
+        except Exception as e:
+            print("Error: ", e)
 
-        resultado = subprocess.run(cmd, capture_output=True, text=True)
-        
         if resultado.returncode != 0:
             print("Error: " + resultado.stderr)
 
