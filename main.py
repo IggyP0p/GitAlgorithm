@@ -1,3 +1,3 @@
 from assets import interface
 
-interface.start()
+interface.screen.mainloop()
