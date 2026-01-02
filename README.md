@@ -1,4 +1,4 @@
-# GitAlgorithm (or your project name)
+# GitAlgorithm
 
 A graphical application built with **Python + Tkinter** that allows you to perform **Git commits** (GitHub, GitLab, or both) by executing Git commands directly in the system terminal using `subprocess`.
 
